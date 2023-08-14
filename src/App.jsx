@@ -24,7 +24,6 @@ function App() {
         <Header />
         <Content />
       </div>
-      s
     </div>
   );
 }

@@ -18,6 +18,9 @@ const ProductCard = ({ product }) => {
             <span className="px-2 py-1 bg-blue-800 text-white text-xs rounded-2xl">
               {product.category.title}
             </span>
+            <span className="px-2 py-1 bg-blue-500 text-white text-xs rounded-2xl">
+              {product.subCategory.title}
+            </span>
             <span className="px-2 py-1 bg-green-700 text-white text-xs rounded-2xl">
               {product.status}
             </span>

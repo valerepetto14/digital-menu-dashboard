@@ -55,7 +55,7 @@ const Sidebar = ({ sideBarIsOpen }) => {
       </div>
       <div className="absolute bottom-10 flex">
         <a
-          href="#"
+          href="/signIn"
           className="flex items-center gap-4 hover:bg-blue-800 p-4 text-gray-400 font-semibold hover:text-white rounded-lg transition-colors"
         >
           <RiLogoutBoxRLine className="mr-4" />

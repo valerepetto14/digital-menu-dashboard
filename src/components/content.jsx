@@ -2,15 +2,29 @@ import { useEffect, useState } from "react";
 import { RiSearchLine, RiFilter3Line } from "react-icons/ri";
 import ProductCard from "./products/card";
 import { getProducts } from "../api/product";
+import { useProductStore } from "../store/products";
+import { searchedProducts } from "../api/product";
 
 const Content = () => {
-  const [products, setProducts] = useState([]);
+  const [searchText, setSearchText] = useState('')
+
+  const [status, setStatus] = useState('')
+
+  const { products, setProducts } = useProductStore()
 
   useEffect(() => {
     getProducts().then((res) => setProducts(res.data.products));
   }, []);
 
-  console.log(products);
+  useEffect(() => {
+    searchedProducts(searchText, status).then((res) => setProducts(res.data.products))
+  }, [searchText, status])
+  
+  const handleSelectedChange = (event) => {
+    setStatus(event.target.value)
+  }
+
+  console.log(status)
   return (
     <div className="flex flex-col bg-gray-100 p-4 md:p-12">
       <h1 className="text-3xl font-semibold mb-6">Products</h1>
@@ -21,6 +35,7 @@ const Content = () => {
             type="text"
             className="bg-white py-2 pr-4 pl-8 outline-none rounded-lg w-full"
             placeholder="Search"
+            onChange={event => setSearchText(event.target.value)}
           />
         </div>
         <div className="relative col-span-2 md:col-span-1">
@@ -29,10 +44,12 @@ const Content = () => {
             type="text"
             className="bg-white py-2 pr-4 pl-8 outline-none rounded-lg w-full"
             placeholder="Status"
+            value={status}
+            onChange={handleSelectedChange}
           >
-            <option value="1">All</option>
-            <option value="2">Active</option>
-            <option value="3">Inactive</option>
+            <option value="">All</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
           </select>
         </div>
         <div className="relative col-span-2 md:col-span-1">

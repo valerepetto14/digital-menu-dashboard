@@ -3,8 +3,11 @@ import {
   RiArrowDownSLine,
   RiCheckboxBlankCircleFill,
 } from "react-icons/ri";
+import { userStore } from "../store/user";
 
 const Header = () => {
+  const { user } = userStore();
+
   return (
     <div className="col-span-5">
       <header className="flex flex-col md:flex-row items-center justify-end p-4 w-full gap-4">
@@ -18,7 +21,7 @@ const Header = () => {
             </li>
             <li>
               <a href="#" className="flex items-center gap-1">
-                Valentin Repetto
+                {user.firstName} {user.lastName}
                 <RiArrowDownSLine />
               </a>
             </li>

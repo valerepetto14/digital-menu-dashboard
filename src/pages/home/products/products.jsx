@@ -1,33 +1,35 @@
 import { useEffect, useState } from "react";
 import { RiSearchLine, RiFilter3Line } from "react-icons/ri";
-import ProductCard from "./products/card";
-import { getProducts } from "../api/product";
-import { useProductStore } from "../store/products";
-import { searchedProducts } from "../api/product";
+import { useNavigate } from "react-router-dom";
+import ProductCard from "../../../components/products/card";
+import { getProducts } from "../../../api/product";
+import { useProductStore } from "../../../store/products";
+import { searchedProducts } from "../../../api/product";
 
-const Content = () => {
-  const [searchText, setSearchText] = useState('')
-
-  const [status, setStatus] = useState('')
-
-  const { products, setProducts } = useProductStore()
+const Products = () => {
+  const [searchText, setSearchText] = useState("");
+  const [status, setStatus] = useState("");
+  const { products, setProducts } = useProductStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProducts().then((res) => setProducts(res.data.products));
   }, []);
 
   useEffect(() => {
-    searchedProducts(searchText, status).then((res) => setProducts(res.data.products))
-  }, [searchText, status])
-  
-  const handleSelectedChange = (event) => {
-    setStatus(event.target.value)
-  }
+    searchedProducts(searchText, status).then((res) =>
+      setProducts(res.data.products)
+    );
+  }, [searchText, status]);
 
-  console.log(status)
+  const handleSelectedChange = (event) => {
+    setStatus(event.target.value);
+  };
+
+  console.log(status);
   return (
     <div className="flex flex-col bg-gray-100 p-4 md:p-12">
-      <h1 className="text-3xl font-semibold mb-6">Products</h1>
+      <h1 className="text-xl font-semibold mb-6">Products</h1>
       <div className="w-full grid grid-cols-5 gap-2 md:gap-10 mb-8">
         <div className="relative col-span-full md:col-span-2">
           <RiSearchLine className="absolute left-2 top-3" />
@@ -35,7 +37,7 @@ const Content = () => {
             type="text"
             className="bg-white py-2 pr-4 pl-8 outline-none rounded-lg w-full"
             placeholder="Search"
-            onChange={event => setSearchText(event.target.value)}
+            onChange={(event) => setSearchText(event.target.value)}
           />
         </div>
         <div className="relative col-span-2 md:col-span-1">
@@ -65,8 +67,11 @@ const Content = () => {
           </select>
         </div>
         {/* clear filter */}
-        <button className="col-span-1 flex items-center justify-center bg-blue-800 text-white rounded-lg">
-          Clear
+        <button
+          onClick={() => navigate("/products/add")}
+          className="col-span-1 flex items-center justify-center bg-blue-800 text-white text-xs lg:text-sm rounded-lg"
+        >
+          Add product
         </button>
       </div>
       <div className="flex flex-col">
@@ -85,4 +90,4 @@ const Content = () => {
   );
 };
 
-export default Content;
+export default Products;

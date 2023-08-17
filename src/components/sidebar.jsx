@@ -5,8 +5,16 @@ import {
   RiMessage2Line,
   RiLogoutBoxRLine,
 } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ sideBarIsOpen }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/signIn");
+  };
+
   return (
     <div
       className={`bg-white fixed z-40 col-span-1 p-8 border-r border-gray-100 lg:static top-0 w-full h-full transition-all ${
@@ -29,7 +37,7 @@ const Sidebar = ({ sideBarIsOpen }) => {
                 Dashboard
               </a>
               <a
-                href="#"
+                href="/products"
                 className="flex items-center gap-4 hover:bg-blue-800 p-4 text-gray-400 font-semibold hover:text-white rounded-lg transition-colors"
               >
                 <RiBriefcaseLine className="mr-4" />
@@ -55,7 +63,7 @@ const Sidebar = ({ sideBarIsOpen }) => {
       </div>
       <div className="absolute bottom-10 flex">
         <a
-          href="/signIn"
+          onClick={handleLogout}
           className="flex items-center gap-4 hover:bg-blue-800 p-4 text-gray-400 font-semibold hover:text-white rounded-lg transition-colors"
         >
           <RiLogoutBoxRLine className="mr-4" />

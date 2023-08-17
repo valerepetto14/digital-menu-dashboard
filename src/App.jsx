@@ -1,14 +1,16 @@
 import { Routes, Route } from "react-router-dom";
-
-import Home from "./pages/home";
+import ProtectedRoute from "./components/protectedRoute";
+import Home from "./pages/home/home";
 import SignIn from "./pages/auth/signIn";
 
 function App() {
   return (
     <div className="App">
-      <Routes>
+      <Routes basename="/dashboard">
+        <Route element={<ProtectedRoute />}>
+          <Route path="/*" element={<Home />} />
+        </Route>
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/" element={<Home />} />
       </Routes>
     </div>
   );

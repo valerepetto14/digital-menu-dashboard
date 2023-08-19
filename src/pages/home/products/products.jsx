@@ -8,12 +8,18 @@ import { searchedProducts } from "../../../api/product";
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
+  const [page, setPage] = useState(1);
   const [status, setStatus] = useState("");
-  const { products, setProducts } = useProductStore();
+  const { products, setProducts, moreProducts, lastPage, setLastPage } =
+    useProductStore();
   const navigate = useNavigate();
 
   useEffect(() => {
-    getProducts().then((res) => setProducts(res.data.products));
+    getProducts(page).then((res) => {
+      console.log(1, res.data.totalPages);
+      setProducts(res.data.products);
+      setLastPage(res.data.totalPages);
+    });
   }, []);
 
   useEffect(() => {
@@ -21,6 +27,11 @@ const Products = () => {
       setProducts(res.data.products)
     );
   }, [searchText, status]);
+
+  const loadMoreProducts = () => {
+    setPage(page + 1);
+    getProducts(page).then((res) => moreProducts(res.data.products));
+  };
 
   const handleSelectedChange = (event) => {
     setStatus(event.target.value);
@@ -85,6 +96,23 @@ const Products = () => {
             <ProductCard key={product.id} product={product} />
           ))
         }
+        <div className="w-full flex justify-center">
+          {
+            // more products
+            page != lastPage ? (
+              <span
+                onClick={loadMoreProducts}
+                className="text-blue-800 font-semibold cursor-pointer hover:underline"
+              >
+                Load more
+              </span>
+            ) : (
+              <span className="text-gray-400 font-semibold">
+                No more products
+              </span>
+            )
+          }
+        </div>
       </div>
     </div>
   );

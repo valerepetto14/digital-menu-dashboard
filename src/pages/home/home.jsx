@@ -21,11 +21,14 @@ const Home = () => {
       try {
         const token = localStorage.getItem("token");
         console.log(token);
-        const res = await axios.get("http://localhost:3000/auth/checkAuth", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await axios.get(
+          "http://15.229.105.249:3000/auth/checkAuth",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setAuth(true);
         setUser(res.data.user);
       } catch (error) {
